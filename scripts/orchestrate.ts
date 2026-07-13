@@ -27,41 +27,62 @@ const ROOT = process.cwd();
 
 const GUIDED_DESIGN_SYSTEM = `
 You are creating content for a website that follows the design language of saathvikpai.com
-and aureliex.com (roundletter). The aesthetic is:
+and aureliex.com (roundletter). This is a sophisticated, literature-inspired design system.
 
-PALETTE:
-- Background: #F4EFE6 (warm paper)
-- Text: #1C1A17 (deep ink)
-- Secondary text: #6B6560 (graphite)
-- Accent: #8B3A2E (rust red)
-- Light background: #EDE5D5 (parchment)
-- Moody accent: #3E4852 (shadow blue)
-- Rules/dividers: rgba(28,26,23,0.22)
+PALETTE (use these exact values):
+- --paper: #F4EFE6 (warm off-white background — the default)
+- --ink: #1C1A17 (deep brown-black text)
+- --graphite: #6B6560 (secondary text, captions, metadata)
+- --rust: #8B3A2E (primary accent — links, emphasis dots, borders)
+- --parchment: #EDE5D5 (lighter neutral for cards/insets)
+- --shadow-blue: #3E4852 (moody accent, used sparingly for separators)
+- --rule: rgba(28,26,23,0.22) (ink rules / dividers)
+- Sunset palette (use for celebratory/warm moments):
+  --sunset-peach: #F2C9A4, --sunset-coral: #D97A57
+  --sunset-gold: #E8B547, --sunset-indigo: #2E3A5C
+- For data: green #7dba6a (positive), red #c45a5a (negative)
 
 TYPOGRAPHY:
-- Headings: Georgia or serif display fonts, weight 500, tight letter-spacing
-- Body: Georgia/Cambria/Times New Roman serif stack
-- Eyebrows/labels: 11px uppercase tracking
-- H1: clamp(2.1rem, 1.3rem + 4.2vw, 3.9rem)
-- Fluid type scale throughout
+- Display font: Cormorant Garamond or Georgia (italic, weight 500)
+- Body font: EB Garamond or Georgia/Cambria/Times New Roman serif stack
+- Monospace: Menlo, Monaco, Courier New (for data/code only)
+- H1: clamp(2.1rem, 1.3rem + 4.2vw, 3.9rem), letter-spacing: -0.02em
+- H2: clamp(1.55rem, 1.2rem + 1.1vw, 1.95rem)
+- H3: clamp(1.2rem, 1rem + 0.8vw, 1.45rem)
+- Body: clamp(1.04rem, 0.96rem + 0.38vw, 1.2rem), line-height: 1.92
+- Eyebrows/labels: 11px uppercase, letter-spacing: 0.22-0.28em
+- Use text-indent: 1.5em for opening paragraphs of long prose
+- Use font-feature-settings: "liga" 1, "kern" 1
 
 LAYOUT:
-- Newspaper/editorial feel — mastheads, columns, rules
-- Max-width prose containers (~44rem for reading, ~58rem for grids)
-- Generous padding, careful whitespace
-- Centered layouts with purposeful asymmetry
-- Ink rules (thin border-top dividers)
+- Container widths: 44rem (prose), 58rem (grid), 72rem (wide), 40rem (bare)
+- Masthead: centered, italic serif wordmark with rust-colored dot accent
+- Ink rules: 1px solid rgba(28,26,23,0.22) as section dividers
+- Generous padding: clamp(1.1rem, 4vw, 2rem) horizontal
+- Section spacing: clamp(2.5rem, 6vw, 4.5rem)
+- Blockquotes: italic, border-left: 3px solid rust, subtle background
+- · (interpunct) as separator, never |
+- Ornamental section breaks: centered · · · with color-mix
+
+INTERACTIONS & ANIMATION:
+- Signature easing: cubic-bezier(0.16, 1, 0.3, 1)
+- Hover: smooth color + border transitions (200ms ease)
+- Reveal: opacity 0.9s ease + translateY(16px) entrance
+- Scroll-aware: elements that fade in as you scroll
+- No unnecessary chrome — let the content breathe
 
 MOOD:
 - Literary, contemplative, slightly melancholic
 - Like a hand-pressed broadsheet or private journal
+- Theatrical staging — layered backgrounds, vignettes, purposeful lighting
 - Celebrates craft and slowness
-- Uses · (interpunct) as separator, not |
+- Drop caps for article openings (initial-letter: 3.5)
 - Italic for emphasis, not bold
+- Whitespace is intentional and generous
 
-You MUST output valid JSX/TSX React components using Tailwind CSS classes.
-Use inline styles where Tailwind doesn't cover custom values.
-The component should be a default export.
+You MUST output valid JSX/TSX React components using inline styles (not Tailwind).
+The component should be a default export function.
+Include "use client" at the top if using any hooks or interactivity.
 `;
 
 const FREEFORM_DESIGN_SYSTEM = `
