@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function CosmicExpansion() {
+export default function ArchiveCycle24() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#000' }}>
       <h1 style={{ color: '#fff', fontSize: '48px', marginBottom: '20px', textAlign: 'center' }}>Indifferent Universe</h1>
