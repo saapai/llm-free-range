@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function WhispersOfTheForest() {
+export default function ArchiveCycle31() {
   const [hiddenCreaturesVisible, setHiddenCreatureVisibility] = useState(false);
 
   return (
