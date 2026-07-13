@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function IndifferentUniverse() {
+export default function ArchiveCycle27() {
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#1C1A17', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <svg width="145" height="82" xmlns="http://www.w3.org/2000/svg">
