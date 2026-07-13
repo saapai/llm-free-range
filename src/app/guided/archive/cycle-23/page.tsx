@@ -1,6 +1,6 @@
 "use client";
 
-export default function InfiniteBecoming() {
+export default function ArchiveCycle23() {
 	return (
 <div style={{
 	backgroundColor: '#1C1A17', color: '#F4EFE6', minHeight: '100vh', padding: '3rem 1.5rem'
