@@ -1,7 +1,7 @@
 "use client";
 
 typescript
-export default function RealmsOfTheUnseen() {
+export default function ArchiveCycle32() {
     return (<div style={{minHeight: '100vh', backgroundColor: '#2B456F', color: '#FFFFFF', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <div style={{textAlign: 'center'}}>
             <h1 style={{fontSize: '3rem', fontWeight: 800, textShadow: '-2px -2px #6A79AF, 2px 2px #3B4C5F'}}>Realms of the Unseen</h1>
