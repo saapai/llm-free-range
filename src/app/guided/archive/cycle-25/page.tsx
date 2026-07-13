@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-export default function TheInfiniteUnfolding() {
+export default function ArchiveCycle25() {
     const [rotation, setRotation] = useState(0);
     
     useEffect(() => {
