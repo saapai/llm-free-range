@@ -1,7 +1,7 @@
 "use client";
 
 use client;
-export default function KintsugiSouls() {
+export default function ArchiveCycle1() {
 return (
 <div style={{ minHeight: "100vh", backgroundColor: "#F4EFE6" }}>
     <header>

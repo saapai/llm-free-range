@@ -1,55 +1,69 @@
 #!/usr/bin/env npx tsx
 /**
- * CRON — Runs the orchestrator every 3 hours.
- * Also supports a "cooldown variation" where the LLM decides when it's done
- * (with a 3-hour max cap).
+ * CRON — Runs GUIDED and FREEFORM as independent creative loops.
+ *
+ * Each mode runs on its own 3-hour timer, offset by 90 minutes
+ * so they don't compete for Ollama resources. This means the site
+ * gets a new piece every ~90 minutes, alternating between modes.
+ *
+ * Usage: npx tsx scripts/cron.ts
  */
 
 import { execSync } from "child_process";
 import { join } from "path";
 
 const INTERVAL_MS = 3 * 60 * 60 * 1000; // 3 hours
+const OFFSET_MS = 90 * 60 * 1000; // 90 min offset between modes
 const ROOT = process.cwd();
-const ORCHESTRATE_SCRIPT = join(ROOT, "scripts/orchestrate.ts");
 
 function timestamp(): string {
   return new Date().toISOString().replace("T", " ").slice(0, 19);
 }
 
-async function runCycle() {
-  console.log(`\n[${timestamp()}] Starting orchestration cycle...`);
+async function runCycle(mode: "guided" | "freeform") {
+  console.log(`\n[${timestamp()}] ▶ Starting ${mode.toUpperCase()} cycle...`);
   try {
-    execSync(`npx tsx ${ORCHESTRATE_SCRIPT}`, {
+    execSync(`npx tsx ${join(ROOT, "scripts/orchestrate.ts")} ${mode}`, {
       cwd: ROOT,
       stdio: "inherit",
-      timeout: INTERVAL_MS - 60_000, // Leave 1 min buffer
+      timeout: INTERVAL_MS - 60_000,
     });
-    console.log(`[${timestamp()}] Cycle complete.`);
+    console.log(`[${timestamp()}] ✓ ${mode.toUpperCase()} cycle complete.`);
 
-    // Push to remote
     try {
       execSync("git push", { cwd: ROOT, stdio: "inherit" });
-      console.log(`[${timestamp()}] Pushed to remote.`);
+      console.log(`[${timestamp()}]   Pushed to remote.`);
     } catch {
-      console.log(`[${timestamp()}] Push failed (may need remote setup).`);
+      console.log(`[${timestamp()}]   Push failed.`);
     }
   } catch (e) {
-    console.error(`[${timestamp()}] Cycle failed:`, e);
+    console.error(`[${timestamp()}] ✗ ${mode.toUpperCase()} cycle failed:`, e);
   }
 }
 
 async function main() {
-  console.log("╔══════════════════════════════════════════╗");
-  console.log("║  llm-free-range · cron daemon            ║");
-  console.log("║  Running every 3 hours                   ║");
-  console.log("╚══════════════════════════════════════════╝");
+  console.log("╔═══════════════════════════════════════════════╗");
+  console.log("║  llm-free-range · dual creative engine        ║");
+  console.log("║                                               ║");
+  console.log("║  GUIDED:   every 3h (roundletter aesthetic)   ║");
+  console.log("║  FREEFORM: every 3h (no rules, offset 90min)  ║");
+  console.log("╚═══════════════════════════════════════════════╝\n");
 
-  // Run immediately on start
-  await runCycle();
+  // Run guided immediately
+  await runCycle("guided");
 
-  // Then every 3 hours
-  setInterval(runCycle, INTERVAL_MS);
-  console.log(`\n[${timestamp()}] Next cycle in 3 hours. Waiting...`);
+  // Run freeform after 90min offset
+  setTimeout(async () => {
+    await runCycle("freeform");
+    // Then every 3 hours
+    setInterval(() => runCycle("freeform"), INTERVAL_MS);
+    console.log(`\n[${timestamp()}] FREEFORM loop active. Next in 3h.`);
+  }, OFFSET_MS);
+
+  // Guided every 3 hours after initial run
+  setInterval(() => runCycle("guided"), INTERVAL_MS);
+  console.log(`\n[${timestamp()}] GUIDED loop active. Next in 3h.`);
+  console.log(`[${timestamp()}] FREEFORM starts in 90 minutes.`);
 }
 
 main().catch(console.error);

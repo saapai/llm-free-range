@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "orchestrate": "npx tsx scripts/orchestrate.ts",
+    "orchestrate:guided": "npx tsx scripts/orchestrate.ts guided",
+    "orchestrate:freeform": "npx tsx scripts/orchestrate.ts freeform",
     "cron": "npx tsx scripts/cron.ts"
   },
   "dependencies": {

@@ -1,12 +1,15 @@
 /**
  * Drift log — each cycle the LLM explains what it did and why.
- * The git history becomes a narrative.
+ * Each mode has its own drift log.
  */
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 
-const DRIFT_FILE = join(process.cwd(), "data", "drift.json");
+function driftPath(mode?: string): string {
+  if (mode) return join(process.cwd(), "data", `drift-${mode}.json`);
+  return join(process.cwd(), "data", "drift.json");
+}
 
 export interface DriftEntry {
   cycle: number;
@@ -24,19 +27,20 @@ export interface DriftLog {
   entries: DriftEntry[];
 }
 
-export function loadDrift(): DriftLog {
-  if (!existsSync(DRIFT_FILE)) {
+export function loadDrift(mode?: string): DriftLog {
+  const file = driftPath(mode);
+  if (!existsSync(file)) {
     return { entries: [] };
   }
   try {
-    return JSON.parse(readFileSync(DRIFT_FILE, "utf-8"));
+    return JSON.parse(readFileSync(file, "utf-8"));
   } catch {
     return { entries: [] };
   }
 }
 
-export function saveDrift(log: DriftLog): void {
-  writeFileSync(DRIFT_FILE, JSON.stringify(log, null, 2));
+export function saveDrift(log: DriftLog, mode?: string): void {
+  writeFileSync(driftPath(mode), JSON.stringify(log, null, 2));
 }
 
 export function addDriftEntry(log: DriftLog, entry: DriftEntry): DriftLog {
