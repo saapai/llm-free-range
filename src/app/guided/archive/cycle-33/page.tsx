@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react'
-export default function IndifferentUniverse() {
+export default function ArchiveCycle33() {
     const [expansion, setExpansion] = useState(0)
     setTimeout(() => {setExpansion((prev) => prev + 1)}, 250)
     return (
