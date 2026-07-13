@@ -3,7 +3,7 @@
 'use strict';
 import React from 'react';
 
-export default function SymphonyOfKnowledge() {
+export default function ArchiveCycle8() {
 	return (
     <div style={{minHeight: '100vh', backgroundColor: '#FF5C63', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
       <div style={{backgroundColor: '#FFFFFF', borderRadius: 4, padding: 24, maxWidth: '720px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif'}}>
