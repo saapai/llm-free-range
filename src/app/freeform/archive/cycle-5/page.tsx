@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function ArtisticExploration() {
+export default function ArchiveCycle5() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f5f5dc', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div style={{ width: '80%', maxWidth: '960px', margin: 'auto', textAlign: 'justify', fontFamily: "'Montserrat', sans-serif", lineHeight: '1.5em', color: '#333' }}>
