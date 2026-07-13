@@ -3,7 +3,7 @@
 typescript
 import React from 'react';
 
-export default function MooseBayMirrored() {
+export default function ArchiveCycle19() {
   return (
     <div style={{ minHeight: '100vh' }}>
       <header>
