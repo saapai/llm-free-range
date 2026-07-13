@@ -4,7 +4,7 @@ typescript
 /* use client */
 import React from 'react';
 
-export default function SymphonyOfSouls() {
+export default function ArchiveCycle32() {
   return (
     <div
       style={{
