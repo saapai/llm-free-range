@@ -2,7 +2,7 @@
 
 `use client`
 
-export default function WhispersOfTheDeep() {
+export default function ArchiveCycle17() {
   return (
     <div style={{minHeight: '100vh', backgroundColor: '#2E3A5C'}}>
       <header style={{backgroundColor: '#F4EFE6', padding: '1rem'}}>
