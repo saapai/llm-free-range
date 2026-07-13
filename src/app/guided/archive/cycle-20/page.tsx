@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function SymphonyOfTheSeas() {
+export default function ArchiveCycle20() {
   return (
     <div style={{minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#F4EFE6"}}>
       <div style={{textAlign: "center", paddingBottom: "3rem"}}>
