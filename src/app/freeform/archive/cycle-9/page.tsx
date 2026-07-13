@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import './App.css';
 
-export default function App() {
+export default function ArchiveCycle9() {
     const [tides, setTides] = useState(0);
 
     return (
