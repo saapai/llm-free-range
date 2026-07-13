@@ -367,11 +367,13 @@ Now create the page. Remember:
     code = code.replace(/^(TSX|tsx|JSX|jsx)\s*\n/gm, "");
     code = code.replace(/^(Here's|Here is|Below is|The following|I'll|Let me).*\n/gm, "");
 
-    // Remove bare `use client;` (without quotes) — LLM sometimes outputs this
-    code = code.replace(/^use client;\s*\n/gm, "");
+    // Remove ALL variations of "use client" — bare, quoted, with/without semicolons
+    code = code.replace(/^["']?use client["']?;?\s*\n/gm, "");
 
-    // Ensure "use client" is at the top (exactly once)
-    code = code.replace(/^["']use client["'];?\s*\n*/gm, "").trim();
+    // Fix Array(n).fill() — needs .fill(0) for TypeScript
+    code = code.replace(/Array\((\d+)\)\.fill\(\)/g, "Array.from({ length: $1 })");
+
+    // Ensure "use client" is at the top (exactly once, properly quoted)
     code = `"use client";\n\n${code}`;
 
     // Fix export — ensure default export exists
