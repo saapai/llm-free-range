@@ -1,6 +1,6 @@
 "use client";
 
-export default function EternalBecoming() {
+export default function ArchiveCycle19() {
   return (
     <div style={{
       display: 'flex',
