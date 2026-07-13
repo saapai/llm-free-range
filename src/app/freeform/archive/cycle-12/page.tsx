@@ -1,6 +1,6 @@
 "use client";
 
-export default function EphemeralEloquence() {
+export default function ArchiveCycle12() {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
       <header>
