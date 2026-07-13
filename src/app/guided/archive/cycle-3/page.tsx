@@ -1,6 +1,6 @@
 "use client";
 
-export default function Artwork() {
+export default function ArchiveCycle3() {
     return (
         <div style={{minHeight: '100vh', backgroundColor: '#F4EFE6', paddingTop: '2rem'}}>
             <div style={{maxWidth: '44rem', margin: 'auto', fontFamily: 'Georgia, serif', lineHeight: 1.92, color: '#1C1A17'}}>
