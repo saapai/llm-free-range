@@ -3,7 +3,7 @@
 typescript
 import React from 'react';
 
-export default function Artwork() {
+export default function ArchiveCycle33() {
   return (
     <div
       style={{
