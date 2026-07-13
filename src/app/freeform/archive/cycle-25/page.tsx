@@ -1,6 +1,6 @@
 "use client";
 
-export default function GalacticWhispers() {
+export default function ArchiveCycle25() {
   return (
     <div style={{
       minHeight: '100vh',
