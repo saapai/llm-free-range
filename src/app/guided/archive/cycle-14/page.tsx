@@ -1,6 +1,6 @@
 "use client";
 
-export default function WhispersOfLycurgus() {
+export default function ArchiveCycle14() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <header>
