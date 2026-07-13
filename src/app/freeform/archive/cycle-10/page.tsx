@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function AurorasOfTheCosmos() {
+export default function ArchiveCycle10() {
 	return (
 		<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000' }}>
 			<div style={{ color: '#fff', fontSize: '2em', textAlign: 'center', padding: '4rem' }}>
