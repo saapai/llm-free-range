@@ -2,7 +2,7 @@
 
 `use client`
 
-export default function UnveilingTheMysteriesOfKnowledge() {
+export default function ArchiveCycle7() {
   return (
     <div style={{
       backgroundColor: '#F4EFE6',
