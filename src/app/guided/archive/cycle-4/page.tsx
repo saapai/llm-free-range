@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-export default function CosmicExploration() {
+export default function ArchiveCycle4() {
   return (
     <div style={{
       minHeight: '100vh',
