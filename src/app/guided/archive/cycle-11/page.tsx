@@ -1,6 +1,6 @@
 "use client";
 
-export default function CollapseAndRenewal() {
+export default function ArchiveCycle11() {
 	return (
 		<div style={{ minHeight: "100vh", backgroundColor: "#F4EFE6", display: "flex", alignItems: "center", justifyContent: "center" }}>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style={{ width: "100%", maxWidth: "44rem", height: "auto" }}>
