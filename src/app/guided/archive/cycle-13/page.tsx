@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function TheEyesOfTheSpartans() {
+export default function ArchiveCycle13() {
   return (
     <div style={{
       minHeight: "100vh",
