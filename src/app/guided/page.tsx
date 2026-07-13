@@ -1,8 +1,7 @@
 "use client";
 
-use client;
 export default function KintsugiSouls() {
-return (
+  return (
 <div style={{ minHeight: "100vh", backgroundColor: "#F4EFE6" }}>
     <header>
         <h1 style={{ textAlign: "center", fontSize: `clamp(2.1rem, 1.3rem + 4.2vw, 3.9rem)` }}>Kintsugi Souls</h1>

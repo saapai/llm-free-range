@@ -3,7 +3,7 @@
 use client
 import React from 'react';
 
-export default function ThreadsOfLife() {
+export default function ArchiveCycle1() {
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#F3F3F3" }}>
       <h1 style={{ textAlign: "center", fontSize: "48px", marginTop: "50px" }}>Threads of Life</h1>
