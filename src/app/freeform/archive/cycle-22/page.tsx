@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function IndifferentUniverse() {
+export default function ArchiveCycle22() {
   return (
     <div style={{
       backgroundColor: '#01041a',
