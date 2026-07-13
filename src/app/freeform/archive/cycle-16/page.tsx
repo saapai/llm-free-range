@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function GalacticSymphony() {
+export default function ArchiveCycle16() {
 	return (
 		<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 			<svg width="100%" height="100%" viewBox="0 0 560 420">
