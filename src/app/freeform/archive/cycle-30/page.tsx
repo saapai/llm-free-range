@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-export default function EphemeralThreads() {
+export default function ArchiveCycle30() {
     return (
         <div style={{
             minHeight: "100vh",
