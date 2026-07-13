@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #e8e8e8;
+  --accent: #ff6b35;
+  --muted: #666;
+  --border: #222;
+
+  /* Guided mode — roundletter palette */
+  --paper: #F4EFE6;
+  --ink: #1C1A17;
+  --graphite: #6B6560;
+  --rust: #8B3A2E;
+  --parchment: #EDE5D5;
+  --shadow-blue: #3E4852;
+  --rule: rgba(28,26,23,0.22);
 }
 
 @theme inline {
@@ -12,15 +24,39 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+}
+
+/* Guided mode overrides */
+.guided {
+  --background: var(--paper);
+  --foreground: var(--ink);
+}
+
+.guided body, .guided {
+  font-family: Georgia, Cambria, "Times New Roman", serif;
+}
+
+/* Entropy pulse animation */
+@keyframes entropy-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.entropy-dot {
+  animation: entropy-pulse 2s ease-in-out infinite;
+}
+
+/* Drift log styling */
+.drift-entry {
+  border-left: 2px solid var(--border);
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.drift-entry:hover {
+  border-left-color: var(--accent);
 }
