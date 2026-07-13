@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function WhispersOfTheCosmos() {
+export default function ArchiveCycle7() {
   return (
     <div style={{
       minHeight: '100vh',
