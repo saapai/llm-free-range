@@ -1,6 +1,6 @@
 "use client";
 
-export default function DreamscapeRealms() {
+export default function ArchiveCycle8() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem'
