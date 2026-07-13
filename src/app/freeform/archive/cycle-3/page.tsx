@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function StardustDreams() {
+export default function ArchiveCycle3() {
     const [textRevealed, setTextReveal] = useState(false);
     
     setTimeout(() => {
