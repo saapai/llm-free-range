@@ -1,7 +1,6 @@
-TSX
 import React from 'react';
 
-const AurorasPage = () => {
+export default function GuidedPage() {
     return (
         <div className="bg-[#F4EFE6] text-[#1C1A17] min-h-screen flex justify-center items-center">
             <section className="max-w-prose mx-auto px-8 lg:px-0 py-12 space-y-6">
@@ -25,6 +24,4 @@ const AurorasPage = () => {
             </section>
         </div>
     );
-};
-
-export default AurorasPage;
+}

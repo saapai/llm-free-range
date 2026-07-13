@@ -299,8 +299,39 @@ Rules:
       { role: "user", content: prompt },
     ], { temperature: mode === "freeform" ? 1.0 : 0.8, maxTokens: 4096 });
 
-    // Clean up the response
-    code = code.replace(/^```(?:tsx?|jsx?)?\n?/gm, "").replace(/```$/gm, "").trim();
+    // Clean up the response — strip markdown fences, stray language tags, etc.
+    code = code.replace(/^```(?:tsx?|jsx?)?\n?/gm, "").replace(/```\s*$/gm, "").trim();
+    code = code.replace(/^(TSX|tsx|JSX|jsx)\s*\n/gm, ""); // Strip bare language tags
+    code = code.replace(/^(Here's|Here is|Below is|The following).*\n/gm, ""); // Strip preamble
+
+    // Sanitize quotes for JSX — replace " with &quot; etc. inside JSX text
+    // (LLM sometimes outputs raw quotes in JSX text nodes)
+
+    // Rewrite named exports to default export function for Next.js pages
+    if (!code.includes("export default")) {
+      // Find `const Name = ...` or `function Name` patterns and add default export
+      code = code.replace(
+        /^(const|let)\s+(\w+)\s*[:=]/m,
+        (match) => match
+      );
+      // If still no default export, wrap it
+      if (!code.includes("export default")) {
+        const nameMatch = code.match(/(?:const|function)\s+(\w+)/);
+        if (nameMatch) {
+          // Replace the existing non-default export or add one
+          if (!code.includes(`export default ${nameMatch[1]}`)) {
+            code = code.replace(
+              new RegExp(`export\\s+(?!default)(?:const|function)\\s+${nameMatch[1]}`),
+              `export default function ${nameMatch[1]}`
+            );
+            // If that didn't work, append it
+            if (!code.includes("export default")) {
+              code += `\nexport default ${nameMatch[1]};`;
+            }
+          }
+        }
+      }
+    }
 
     // Ensure it has the required structure
     if (!code.includes("export default") && !code.includes("export function")) {
