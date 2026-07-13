@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function StardustShores() {
+export default function ArchiveCycle29() {
 	return (
 		<div style={{
 			display: 'flex',
