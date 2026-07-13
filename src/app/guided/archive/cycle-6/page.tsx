@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-export default function WhispersInTheDataStream() {
+export default function ArchiveCycle6() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#EDE5D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div>
