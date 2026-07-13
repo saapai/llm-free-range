@@ -1,6 +1,6 @@
 "use client";
 
-export default function WhispersOfChange() {
+export default function ArchiveCycle6() {
 	return (
 		<div style={{ minHeight: '100vh', backgroundColor: '#2b3e5a', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 			<svg viewBox="0 0 800 600" width="800" height="600" style={{ fill: 'white' }} xmlns="http://www.w3.org/2000/svg">
