@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function IndifferentCosmos() {
+export default function ArchiveCycle21() {
   return (
     <div style={{
       minHeight: '100vh',
