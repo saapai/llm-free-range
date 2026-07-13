@@ -372,12 +372,69 @@ async function fetchNumberFact(): Promise<ScrapedContent> {
   }
 }
 
+// ─── Available sources (exported for LLM-directed fetching) ──────────
+
+export const AVAILABLE_SOURCES: Record<string, () => Promise<ScrapedContent | ScrapedContent[]>> = {
+  "wikipedia-random": fetchWikipediaRandom,
+  "wikipedia-topic": () => {
+    const topics = [
+      "consciousness", "fibonacci", "Byzantine_Empire", "jazz", "entropy",
+      "Rosetta_Stone", "aurora", "Jorge_Luis_Borges", "fractal", "Sapir-Whorf_hypothesis",
+      "synesthesia", "Voyager_program", "Turing_machine", "origami", "bioluminescence",
+      "Silk_Road", "Fermi_paradox", "emergence", "Dada", "Stoicism",
+      "Hiroshima", "Library_of_Alexandria", "Pale_Blue_Dot", "cave_painting",
+      "Kafka", "saudade", "wabi-sabi", "Ubuntu_philosophy", "memento_mori",
+      "Ozymandias", "Ship_of_Theseus", "Allegory_of_the_cave", "Kintsugi",
+      "Overview_effect", "Dunbar%27s_number", "Boltzmann_brain", "sublime_(philosophy)",
+      "Simulacra_and_Simulation", "haiku", "negative_space", "vanitas",
+      "diaspora", "nostalgia", "liminal_space", "the_absurd", "ikigai",
+      "Deep_time", "Anthropocene", "Golden_ratio", "Tragedy_of_the_commons",
+      "Thought_experiment", "Flow_(psychology)", "Apophenia", "Pareidolia",
+      "Collective_unconscious", "Mono_no_aware", "Sublime_(philosophy)",
+      "Amor_fati", "Eternal_return", "Panopticon", "Heterotopia",
+    ];
+    return fetchWikipediaTopic(topics[Math.floor(Math.random() * topics.length)]);
+  },
+  "wikipedia-on-this-day": fetchOnThisDay,
+  "archive-org": fetchArchiveOrg,
+  "hacker-news": fetchHackerNews,
+  "nasa-apod": fetchNasaApod,
+  "open-library": fetchOpenLibrary,
+  "poetry": fetchPoetry,
+  "reddit": fetchReddit,
+  "met-museum": fetchMetArtwork,
+  "philosophy": fetchPhilosophy,
+  "world-news": fetchWorldNews,
+  "number-fact": fetchNumberFact,
+};
+
+/** Fetch from specific sources by name */
+export async function scrapeTargeted(sourceNames: string[]): Promise<ScrapedContent[]> {
+  const results: ScrapedContent[] = [];
+  const fetchers = sourceNames
+    .filter((name) => AVAILABLE_SOURCES[name])
+    .map((name) => AVAILABLE_SOURCES[name]());
+
+  const settled = await Promise.allSettled(fetchers);
+  for (const result of settled) {
+    if (result.status === "fulfilled" && result.value) {
+      if (Array.isArray(result.value)) {
+        results.push(...result.value);
+      } else {
+        results.push(result.value);
+      }
+    }
+  }
+  return results;
+}
+
+/** Fetch a specific Wikipedia topic by name */
+export { fetchWikipediaTopic };
+
 // ─── Main scraper ────────────────────────────────────────────────────
 
 /**
  * Gathers ~15-25 diverse pieces of content from across the internet.
- * Each run pulls from a different mix of sources so no two cycles
- * start with the same raw material.
  */
 export async function scrapeBatch(): Promise<ScrapedContent[]> {
   const results: ScrapedContent[] = [];
