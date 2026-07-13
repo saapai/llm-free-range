@@ -1,6 +1,6 @@
 "use client";
 
-export default function UnveilingTheGalacticPalette() {
+export default function ArchiveCycle15() {
   return (
     <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0a1c26'}}>
       <svg viewBox="0 0 800 450" style={{maxWidth: '90%', marginBottom: '-3rem'}}>
