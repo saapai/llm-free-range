@@ -1,7 +1,7 @@
 "use client";
 
 typescript
-export default function StardustSymphony() {
+export default function ArchiveCycle12() {
 return (
 	<div style={{ minHeight: '100vh', backgroundColor: '#2E3A5C' }}>
 		<header style={{ color: '#F4EFE6', padding: '2rem 0', textAlign: 'center', fontSize: 'clamp(2.1rem, 1.3rem + 4.2vw, 3.9rem)' }}>
