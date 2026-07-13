@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function OrbitOfReckoning() {
+export default function ArchiveCycle16() {
   return (
     <div style={{
       minHeight: '100vh',
