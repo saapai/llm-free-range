@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function TheTimelessEchoesOfImes() {
+export default function ArchiveCycle18() {
   const [isArticleVisible, setIsArticleVisible] = useState(false);
   
   return (
