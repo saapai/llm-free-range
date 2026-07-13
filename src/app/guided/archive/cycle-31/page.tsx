@@ -3,7 +3,7 @@
 typescript
 import React from 'react';
 
-export default function TheEternalObserver() {
+export default function ArchiveCycle31() {
   return (
     <div style={{minHeight: "100vh", backgroundColor: "#F4EFE6"}}>
       <header style={{padding: "2rem", textAlign: "center"}}>
