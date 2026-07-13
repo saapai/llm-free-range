@@ -1,6 +1,6 @@
 "use client";
 
-export default function EtherealDance() {
+export default function ArchiveCycle5() {
   return (
     <div style={{
       display: 'flex',
