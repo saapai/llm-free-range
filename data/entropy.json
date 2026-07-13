@@ -1,1 +1,13 @@
-{"snapshots": []}
+{
+  "snapshots": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-07-13T17:52:11.872Z",
+      "guided_entropy": 1,
+      "freeform_entropy": 1,
+      "divergence": 0.43696880043591124,
+      "guided_delta": 1,
+      "freeform_delta": 1
+    }
+  ]
+}
