@@ -3,7 +3,7 @@
 typescript
 import React from 'react';
 
-export default function IndifferentEternity() {
+export default function ArchiveCycle50() {
   return (
     <div style={{
       display: 'flex',
