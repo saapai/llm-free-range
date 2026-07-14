@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function EternalObservation() {
+export default function ArchiveCycle50() {
     const [text, setText] = useState('');
 
     return (
