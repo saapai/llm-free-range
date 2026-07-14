@@ -1,6 +1,6 @@
 "use client";
 
-export default function UnyieldingFortitude() {
+export default function ArchiveCycle53() {
 	return (
 		<div style={{minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 			<img src="https://example.com/tower-snail-teeth-spider-silk.jpg" alt="Tower of Snails' Teeth and Spiders Silk" style={{maxWidth: "80%", borderRadius: "5px"}}/>
