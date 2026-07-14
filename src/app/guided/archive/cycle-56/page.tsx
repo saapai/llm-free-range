@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function CosmicEchoes() {
+export default function ArchiveCycle56() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <header style={{ backgroundColor: '#2E3A5C', color: '#F4EFE6', padding: '1rem 0', textAlign: 'center' }}>
