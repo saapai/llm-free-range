@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function IndifferentCosmos() {
+export default function ArchiveCycle46() {
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#2E3A5C" }}>
       <header>
