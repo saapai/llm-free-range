@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function IndifferentCosmos() {
+export default function ArchiveCycle45() {
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <header style={{ backgroundColor: '#2E3A5C', padding: '2rem', textAlign: 'center', color: '#F4EFE6' }}>
