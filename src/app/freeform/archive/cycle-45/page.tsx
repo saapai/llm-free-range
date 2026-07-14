@@ -1,6 +1,6 @@
 "use client";
 
-export default function AUniverseUnveiled() {
+export default function ArchiveCycle45() {
 	return (
 		<div style={{
             minHeight: "100vh",
