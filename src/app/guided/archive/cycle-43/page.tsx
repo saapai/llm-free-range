@@ -1,6 +1,6 @@
 "use client";
 
-export default function WhispersInTheTwilight() {
+export default function ArchiveCycle43() {
 	return (
 		<div style={{
 			minHeight: '100vh',
