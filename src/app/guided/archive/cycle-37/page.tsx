@@ -1,6 +1,6 @@
 "use client";
 
-export default function MirrorsOfTime() {
+export default function ArchiveCycle37() {
 return (
 <div style={{minHeight: '100vh', backgroundColor: '#F4EFE6'}}>
    <h1 style={{fontSize: 'clamp(2.1rem, 1.3rem + 4.2vw, 3.9rem)', fontFamily: 'Georgia, Cormorant Garamond', lineHeight: 1.92}}>Mirrors of Time</h1>
