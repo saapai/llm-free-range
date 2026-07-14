@@ -3,7 +3,7 @@
 typescript
 import React from 'react';
 
-export default function CosmicExpansion() {
+export default function ArchiveCycle55() {
   return (
     <div style={{
       minHeight: '100vh',
