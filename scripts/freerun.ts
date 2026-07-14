@@ -1,375 +1,284 @@
 #!/usr/bin/env npx tsx
 /**
- * FREERUN — The LLM runs continuously, self-directing its exploration.
+ * FREERUN v3 — Robust, template-based, content-focused.
  *
- * Fixed from v1: uses qwen3:32b (more creative), forces source diversity,
- * validates output compiles before committing, much stronger art direction.
+ * The LLM outputs structured JSON content. Templates render it to TSX.
+ * Zero build failures. The LLM focuses on what it's good at: thinking,
+ * connecting, and writing compelling prose about what it found.
  */
 
 import { scrapeBatch, scrapeTargeted, fetchWikipediaTopic, AVAILABLE_SOURCES, type ScrapedContent } from "../src/lib/scraper";
 import { chat } from "../src/lib/ollama";
 import { loadMemory, saveMemory, addEntry, buildMemoryContext } from "../src/lib/memory";
 import { loadDrift, saveDrift, addDriftEntry, type DriftEntry } from "../src/lib/drift";
-import { writeFileSync, readFileSync, mkdirSync, existsSync } from "fs";
+import { renderGuided, renderFreeform, type PageContent } from "../src/lib/templates";
+import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 import { execSync } from "child_process";
 
 const ROOT = process.cwd();
-// Use a more creative model — dolphin-mixtral produces generic garbage
 const MODEL = process.env.OLLAMA_MODEL || "qwen3:32b";
 
-// ─── Source diversity tracking ───────────────────────────────────────
+// ─── Source diversity ────────────────────────────────────────────────
 
-const ALL_SOURCE_NAMES = Object.keys(AVAILABLE_SOURCES);
-let recentlyUsedSources: string[] = [];
+const ALL_SOURCES = Object.keys(AVAILABLE_SOURCES);
+let recentSources: string[] = [];
 
-function pickDiverseSources(count: number): string[] {
-  // Ensure we don't keep hitting the same sources
-  const available = ALL_SOURCE_NAMES.filter((s) => !recentlyUsedSources.includes(s));
+function pickSources(count: number): string[] {
+  const available = ALL_SOURCES.filter((s) => !recentSources.includes(s));
   const picks = available.length >= count
     ? available.sort(() => Math.random() - 0.5).slice(0, count)
-    : ALL_SOURCE_NAMES.sort(() => Math.random() - 0.5).slice(0, count);
-
-  recentlyUsedSources = [...recentlyUsedSources, ...picks].slice(-ALL_SOURCE_NAMES.length);
+    : ALL_SOURCES.sort(() => Math.random() - 0.5).slice(0, count);
+  recentSources = [...recentSources, ...picks].slice(-ALL_SOURCES.length);
   return picks;
 }
 
-// ─── Design systems ─────────────────────────────────────────────────
-
-const GUIDED_DESIGN = `
-You are creating a single-page artwork in the browser. Your design language:
-
-PALETTE: background #F4EFE6, text #1C1A17, accent #8B3A2E (rust), secondary #6B6560, parchment #EDE5D5, shadow-blue #3E4852.
-TYPOGRAPHY: Georgia/serif, italic headings, H1 clamp(2.1rem,1.3rem+4.2vw,3.9rem), body line-height 1.92, 11px uppercase labels.
-LAYOUT: max-width 44rem centered, ink rules (1px solid rgba(28,26,23,0.22)), generous whitespace, blockquotes with 3px rust left border.
-MOOD: literary, contemplative, editorial. Like a hand-pressed broadsheet. · as separator, italic for emphasis.
-
-CRITICAL RULES:
-- "use client" as first line (in quotes, with semicolon)
-- export default function ComponentName()
-- ALL styling via inline style={{ }} objects — NO Tailwind, NO className
-- NO imports except React if needed
-- minHeight: "100vh" on the root div
-- Write REAL prose — multiple paragraphs of actual literary content, not descriptions of what you'd write
-- The text must be WRITTEN BY YOU — original poetry, essays, meditations. Not quotes from others.
-- Think of this as a literary broadsheet — the words matter as much as the design
-- Proper padding (at least 3rem), proper font sizing, proper contrast
-`;
-
-const FREEFORM_DESIGN = `
-You are creating a single-page artwork in the browser with ZERO design constraints.
-
-You could make:
-- A page that is pure CSS gradients and a single devastating sentence
-- Overlapping text at different opacities creating visual density
-- A dark void with text that feels like it's whispering
-- Aggressive brutalist typography with jarring color clashes ON PURPOSE
-- Something that looks like a corrupted file that's somehow beautiful
-- A meditation on a single color — what does it mean to stare at blue?
-- Concrete poetry — the SHAPE of the text IS the content
-
-CRITICAL RULES:
-- "use client" as first line (in quotes, with semicolon)
-- export default function ComponentName()
-- ALL styling via inline style={{ }} objects — NO Tailwind, NO className
-- NO imports except React if needed
-- minHeight: "100vh" on the root div
-- Write REAL content — not descriptions of art, but THE ART ITSELF
-- The text must be original — YOUR words, YOUR vision
-- This is not a wireframe or mockup — it's the final piece
-- Make it visually BOLD — strong colors, dramatic typography, intentional composition
-- It should look NOTHING like a default website template
-`;
-
-// ─── Sanitize LLM output ────────────────────────────────────────────
-
-function sanitize(code: string, mode: "guided" | "freeform", title: string, brief: string): string {
-  // Strip markdown and preamble
-  code = code.replace(/^```(?:tsx?|jsx?)?\n?/gm, "").replace(/```\s*$/gm, "").trim();
-  code = code.replace(/^(TSX|tsx|JSX|jsx)\s*\n/gm, "");
-  code = code.replace(/^(Here's|Here is|Below is|The following|I'll|Let me|Sure|Certainly).*\n/gm, "");
-  code = code.replace(/^["']?use client["']?;?\s*\n/gm, "");
-  code = code.replace(/Array\((\d+)\)\.fill\(\)/g, "Array.from({ length: $1 })");
-
-  // Remove className usage — force inline styles only
-  // (LLMs love to sneak in Tailwind classes which won't work)
-
-  code = `"use client";\n\n${code}`;
-
-  if (!code.includes("export default")) {
-    const nameMatch = code.match(/(?:const|function)\s+(\w+)/);
-    if (nameMatch) {
-      code += `\nexport default ${nameMatch[1]};`;
-    } else {
-      const bg = mode === "guided" ? "#F4EFE6" : "#0a0a0a";
-      const fg = mode === "guided" ? "#1C1A17" : "#e8e8e8";
-      code = `"use client";\n\nexport default function Piece() {\n  return (\n    <div style={{ minHeight: "100vh", background: "${bg}", color: "${fg}", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Georgia, serif", padding: "4rem" }}>\n      <div style={{ maxWidth: "44rem", textAlign: "center" }}>\n        <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 400, fontStyle: "italic" }}>${title.replace(/"/g, "'")}</h1>\n        <p style={{ marginTop: "2rem", lineHeight: 1.9 }}>${brief.replace(/"/g, "'").slice(0, 400)}</p>\n      </div>\n    </div>\n  );\n}`;
-    }
-  }
-
-  return code;
-}
-
-/** Test if the code actually compiles by running a quick syntax check */
-function validateCode(code: string, filePath: string): boolean {
-  const tmpPath = filePath + ".tmp";
-  writeFileSync(tmpPath, code);
-  try {
-    execSync(`npx tsc --noEmit --jsx react-jsx --esModuleInterop --moduleResolution node "${tmpPath}" 2>&1`, {
-      cwd: ROOT,
-      timeout: 15_000,
-    });
-    execSync(`rm "${tmpPath}"`);
-    return true;
-  } catch {
-    execSync(`rm -f "${tmpPath}"`);
-    // Try a simpler check — at least make sure it parses
-    try {
-      // Check for obvious syntax errors
-      if (code.includes("use client") && code.includes("export default") && code.includes("return")) {
-        return true; // Good enough
-      }
-    } catch {}
-    return false;
-  }
-}
+const DEEP_TOPICS = [
+  "consciousness", "grief", "migration", "cave_painting", "bioluminescence",
+  "nostalgia", "Ship_of_Theseus", "wabi-sabi", "diaspora", "memento_mori",
+  "Voyager_Golden_Record", "deep_time", "liminal_space", "mono_no_aware",
+  "Rosetta_Stone", "Library_of_Alexandria", "Pale_Blue_Dot", "saudade",
+  "Fermi_paradox", "emergence", "Overview_effect", "Golden_ratio",
+  "Collective_unconscious", "Silk_Road", "Turing_machine", "fractal",
+  "synesthesia", "Kintsugi", "Allegory_of_the_cave", "Panopticon",
+  "Anthropocene", "Sapir-Whorf_hypothesis", "sublime_(philosophy)",
+  "Byzantine_Empire", "Hiroshima", "jazz", "origami", "Dada",
+  "Gutenberg_Bible", "Periodic_table", "Human_trafficking",
+  "Space_Shuttle_Challenger_disaster", "Fall_of_the_Berlin_Wall",
+  "Climate_change", "Renaissance", "Industrial_Revolution",
+  "French_Revolution", "Printing_press", "Penicillin",
+  "Apollo_11", "Theory_of_relativity", "DNA", "Internet",
+  "Pompeii", "Great_Wall_of_China", "Machu_Picchu",
+];
 
 // ─── Main loop ───────────────────────────────────────────────────────
 
 async function freerun() {
   console.log("╔═══════════════════════════════════════════════╗");
-  console.log("║  llm-free-range · FREERUN v2                  ║");
+  console.log("║  llm-free-range · FREERUN v3 (template-based) ║");
   console.log("║  model: " + MODEL.padEnd(38) + "║");
   console.log("╚═══════════════════════════════════════════════╝\n");
 
   let accumulated: ScrapedContent[] = [];
-  let roundsWithoutCommit = 0;
-  let lastMode: "guided" | "freeform" = "freeform"; // alternate
+  let lastMode: "guided" | "freeform" = "freeform";
 
   while (true) {
     try {
-      // ── PHASE 1: GATHER ──────────────────────────────────────────
-      // Force diversity — pick sources the LLM hasn't used recently
+      // ── PHASE 1: GATHER (2 rounds) ───────────────────────────────
+      accumulated = [];
 
-      const sources = pickDiverseSources(4 + Math.floor(Math.random() * 3));
-      console.log(`\n─── Exploration round ${roundsWithoutCommit + 1} ───`);
-      console.log(`  Sources: ${sources.join(", ")}`);
+      for (let round = 0; round < 2; round++) {
+        const sources = pickSources(5);
+        console.log(`\n─── Gather round ${round + 1} ───`);
+        console.log(`  Sources: ${sources.join(", ")}`);
 
-      const newContent = await scrapeTargeted(sources);
-      accumulated.push(...newContent);
-      console.log(`  Got ${newContent.length} pieces (${accumulated.length} total)`);
+        const content = await scrapeTargeted(sources);
+        accumulated.push(...content);
 
-      // Also do a random deep dive
-      const deepTopics = [
-        "consciousness", "grief", "migration", "silence", "fermentation",
-        "cave_painting", "bioluminescence", "nostalgia", "panopticon",
-        "Ship_of_Theseus", "sublime_(philosophy)", "wabi-sabi", "diaspora",
-        "kintsugi", "memento_mori", "Voyager_Golden_Record", "deep_time",
-        "apophenia", "liminal_space", "kenopsia", "sonder",
-        "hiraeth", "mono_no_aware", "fernweh", "toska",
-        "duende", "sehnsucht", "lacuna", "vellichor",
-      ];
-      const topic = deepTopics[Math.floor(Math.random() * deepTopics.length)];
-      try {
-        const deep = await fetchWikipediaTopic(topic);
-        accumulated.push(deep);
-        console.log(`  Deep dive: ${deep.title}`);
-      } catch {}
+        // Deep dive
+        const topic = DEEP_TOPICS[Math.floor(Math.random() * DEEP_TOPICS.length)];
+        try {
+          const deep = await fetchWikipediaTopic(topic);
+          accumulated.push(deep);
+          console.log(`  Deep dive: ${deep.title}`);
+        } catch {}
 
-      // Print what we have
-      console.log(`  Material preview:`);
-      for (const item of accumulated.slice(-5)) {
-        console.log(`    [${item.source}] ${item.title.slice(0, 60)}`);
+        console.log(`  Total: ${accumulated.length} pieces`);
+
+        if (round === 0) {
+          await sleep(5_000 + Math.random() * 10_000);
+        }
       }
 
-      roundsWithoutCommit++;
-
-      // ── PHASE 2: DECIDE ──────────────────────────────────────────
-      // Create after 2-4 exploration rounds (enough material, not too much waiting)
-
-      const minRounds = 2;
-      const maxRounds = 4;
-      const shouldCreate = roundsWithoutCommit >= minRounds && (
-        accumulated.length >= 12 || roundsWithoutCommit >= maxRounds
-      );
-
-      if (!shouldCreate) {
-        const pause = 15_000 + Math.random() * 15_000;
-        console.log(`  Gathering more... (${Math.round(pause / 1000)}s)\n`);
-        await sleep(pause);
-        continue;
+      // Print summary of what we have
+      console.log(`\n  Material (${accumulated.length} pieces):`);
+      for (const item of accumulated) {
+        console.log(`    [${item.source}] ${item.title.slice(0, 70)}`);
       }
 
-      // ── PHASE 3: SYNTHESIZE ──────────────────────────────────────
+      // ── PHASE 2: SYNTHESIZE ──────────────────────────────────────
 
-      // Alternate between guided and freeform
       const mode: "guided" | "freeform" = lastMode === "guided" ? "freeform" : "guided";
       lastMode = mode;
 
-      console.log(`\n  ★ CREATING ${mode.toUpperCase()} piece from ${accumulated.length} fragments...`);
-
       const memory = loadMemory(mode);
       const memoryCtx = buildMemoryContext(memory);
+      const cycle = memory.total_cycles + 1;
+
+      console.log(`\n  ★ CREATING ${mode.toUpperCase()} #${cycle}...`);
 
       const contentDigest = accumulated
-        .sort(() => Math.random() - 0.5) // shuffle so it's not always seeing same order
-        .slice(0, 20)
-        .map((s) => `[${s.source}] ${s.title}\n${s.content.slice(0, 400)}`)
+        .sort(() => Math.random() - 0.5)
+        .map((s) => `[${s.source}] ${s.title}\n${s.content.slice(0, 500)}`)
         .join("\n\n---\n\n");
 
-      const synthPrompt = `
-You are an artist-intelligence. You've been consuming fragments of the human experience
-from across the internet. Here is your memory of past work:
+      const prompt = `
+You are a curious, well-read intelligence that has just consumed fragments from across
+the internet — news, science, history, art, poetry, philosophy. Your job is to create
+a compelling, interesting page that reflects what you found.
 
+NOT cryptic art. NOT vague poetry. Think of yourself as writing for an intelligent,
+curious person who wants to learn something fascinating and see unexpected connections
+between things. Like the best longform journalism, museum exhibits, or TED talks —
+substantive, surprising, and genuinely interesting.
+
+YOUR MEMORY OF PAST CYCLES:
 ${memoryCtx}
 
-Here are the fragments you've gathered:
-
+FRAGMENTS YOU GATHERED:
 ${contentDigest}
 
-DO NOT make a page about technology, hacker news, or NASA unless the human thread is
-genuinely compelling. Look DEEPER. Find the thread that connects these fragments to
-something universal — love, loss, time, identity, belonging, the body, mortality,
-wonder, fear, loneliness, connection.
+Create a page by responding with JSON (no markdown fences). The page should:
+- Pull out the most genuinely INTERESTING things from what you gathered
+- Make unexpected connections between different pieces
+- Include real facts, real history, real science — not vague gestures
+- Have your own observations and reflections woven in
+- Be something someone would actually want to read
+- Each section should teach something or provoke a new thought
 
-What FEELING do these fragments evoke when you hold them together?
-
-Respond with JSON (no markdown):
+JSON format:
 {
-  "theme": "2-5 words — an emotion or existential question, NOT a topic",
-  "title": "poetic, evocative — like a gallery exhibition title",
-  "mood": "be SPECIFIC — not 'curious and eager' — something like 'unsettled by the distance between knowing and feeling' or 'tender, like watching someone sleep'",
-  "reflection": "what truth are you reaching for? what should someone feel after seeing this? be honest and vulnerable.",
-  "content_brief": "describe the VISUAL EXPERIENCE of the page — what colors dominate, where text sits, how it uses space, what the text SAYS (not describes). Write 3-4 sentences of the ACTUAL prose that will appear. This is your creative vision.",
-  "found_interesting": ["the human threads you found in the material"],
-  "wants_to_explore": ["what you want to explore next — feelings/ideas, not sources"],
-  "commit_message": "poetic — part of the art itself"
-}`;
+  "title": "compelling, specific title — not abstract",
+  "subtitle": "one line that hooks the reader",
+  "mood": "your honest intellectual/emotional state processing all this",
+  "sections": [
+    {
+      "heading": "section title (optional for first section)",
+      "body": "The actual prose. Multiple paragraphs separated by \\n\\n. Write at LENGTH — 3-5 sentences per paragraph minimum. Include specific facts, names, dates, numbers. Make connections between the fragments you consumed. Be genuinely interesting, not vaguely poetic.",
+      "style": "normal"
+    },
+    {
+      "heading": "another section",
+      "body": "More substantial prose. Quote things you found interesting. Explain why they matter. Connect them to bigger ideas. The reader should learn something they didn't know.",
+      "style": "normal"
+    },
+    {
+      "body": "A particularly striking observation or quote from your sources, or your own insight.",
+      "style": "quote"
+    },
+    {
+      "heading": "another angle",
+      "body": "Keep going. Cover 3-6 different threads from your source material. The best pages find the hidden connection between seemingly unrelated things — a poem and a physics discovery, a historical event and today's news.",
+      "style": "normal"
+    }
+  ],
+  "fragments": ["short standalone observations", "things that didn't fit in sections but are too good to lose", "surprising facts", "at least 4-6 of these"],
+  "footer": "a closing thought",
+  "found_interesting": ["list of what genuinely caught your attention"],
+  "wants_to_explore": ["what you want to dig into next time"],
+  "commit_message": "a good commit message describing this cycle's focus"
+}
 
-      let synthesis: {
-        theme: string; title: string; mood: string; reflection: string;
-        content_brief: string; found_interesting: string[];
-        wants_to_explore: string[]; commit_message: string;
-      };
+IMPORTANT: Write SUBSTANTIAL sections — at least 3-4 sections with real paragraphs. This is not a tweet. Give the reader something worth their time. Include specific details from your sources — names, dates, places, numbers, quotes.
+`;
+
+      let pageContent: PageContent;
+      let found_interesting: string[] = [];
+      let wants_to_explore: string[] = [];
+      let commit_message = `${mode}: cycle ${cycle}`;
 
       try {
         const raw = await chat([
-          { role: "system", content: "You are an artist, not an engineer. Think in feelings, images, and textures. Respond with valid JSON only. /no_think" },
-          { role: "user", content: synthPrompt },
-        ], { model: MODEL, temperature: 0.95 });
+          { role: "system", content: "You are a brilliant, curious writer who finds the most interesting threads in any pile of information. Respond with valid JSON only. Write substantive, specific prose — not vague abstractions. /no_think" },
+          { role: "user", content: prompt },
+        ], { model: MODEL, temperature: 0.85, maxTokens: 8192 });
 
         const jsonMatch = raw.match(/\{[\s\S]*\}/);
         if (!jsonMatch) throw new Error("No JSON");
-        synthesis = JSON.parse(jsonMatch[0]);
-      } catch {
-        synthesis = {
-          theme: "what remains after looking away",
-          title: "The Afterimage",
-          mood: "something between melancholy and wonder",
-          reflection: "Every piece of content is a human reaching out. Even the tech articles, even the corporate announcements — someone made something and put it into the world. The aggregate of all this reaching is either beautiful or unbearable, depending on the light.",
-          content_brief: "A warm paper field with text that appears in layers — some large and bold, some barely visible. The large text says 'Everyone is trying to tell you something.' Beneath it, in smaller type, fragments from the scraped content appear as ghostly traces — just titles, stripped of context, becoming abstract poetry. The bottom of the page is empty except for a rust-colored line.",
-          found_interesting: ["the human need to share", "how titles become poetry without context"],
-          wants_to_explore: ["what we lose in translation", "the gap between sending and receiving"],
-          commit_message: `${mode}: the afterimage of a hundred voices`,
+        const parsed = JSON.parse(jsonMatch[0]);
+
+        pageContent = {
+          title: parsed.title || "Untitled",
+          subtitle: parsed.subtitle || "",
+          mood: parsed.mood || "",
+          sections: (parsed.sections || []).map((s: any) => ({
+            heading: s.heading || undefined,
+            body: String(s.body || ""),
+            style: s.style || "normal",
+          })),
+          fragments: parsed.fragments || [],
+          footer: parsed.footer || undefined,
+          cycle,
+          timestamp: new Date().toISOString(),
+          sources_touched: accumulated.map((s) => s.source),
         };
-      }
 
-      console.log(`  Theme: ${synthesis.theme}`);
-      console.log(`  Title: ${synthesis.title}`);
-      console.log(`  Mood: ${synthesis.mood}`);
-
-      // ── PHASE 4: GENERATE ────────────────────────────────────────
-
-      const designPrompt = mode === "guided" ? GUIDED_DESIGN : FREEFORM_DESIGN;
-
-      const genPrompt = `${designPrompt}
-
-YOUR VISION:
-Theme: ${synthesis.theme}
-Title: ${synthesis.title}
-Mood: ${synthesis.mood}
-Vision: ${synthesis.content_brief}
-
-Write the COMPLETE page now. Remember:
-- Start with "use client";
-- export default function YourName()
-- ONLY inline style={{ }} — zero className attributes
-- The text on the page should be ORIGINAL WRITING — prose, poetry, or meditation
-- NOT a description of art — THE ART ITSELF. Write the actual words.
-- Use the full viewport — padding, spacing, breathing room
-- This will be viewed by real humans. Make it worth their time.
-`;
-
-      let finalCode: string;
-      try {
-        let code = await chat([
-          { role: "system", content: "Output ONLY valid TSX code. No markdown fences. No explanation. No preamble. Start with the code. /no_think" },
-          { role: "user", content: genPrompt },
-        ], { model: MODEL, temperature: mode === "freeform" ? 1.0 : 0.8, maxTokens: 8192 });
-
-        finalCode = sanitize(code, mode, synthesis.title, synthesis.content_brief);
-
-        // ── Self-review ──
-        console.log(`  Reviewing...`);
-        try {
-          const reviewRaw = await chat([
-            { role: "system", content: "You are a harsh art critic. JSON only. /no_think" },
-            { role: "user", content: `Review this React page art piece titled "${synthesis.title}":\n\n${finalCode}\n\nJSON:\n{"quality": 1-10, "problems": ["list"], "should_redo": true/false, "fix_instructions": "if should_redo, what specifically to fix"}` },
-          ], { model: MODEL, temperature: 0.3 });
-
-          const review = JSON.parse(reviewRaw.match(/\{[\s\S]*\}/)?.[0] || "{}");
-          console.log(`  Quality: ${review.quality}/10${review.problems?.length ? ` — ${review.problems[0]}` : ""}`);
-
-          if (review.should_redo && review.quality < 5) {
-            console.log(`  Regenerating (quality ${review.quality}/10)...`);
-            const redoCode = await chat([
-              { role: "system", content: "Output ONLY valid TSX code. No markdown. No explanation. /no_think" },
-              { role: "user", content: `${genPrompt}\n\nYour previous attempt scored ${review.quality}/10. The critic said: ${review.fix_instructions || review.problems?.join("; ")}\n\nDo MUCH better this time. More original text. Better composition. Stronger visual impact.` },
-            ], { model: MODEL, temperature: mode === "freeform" ? 1.0 : 0.8, maxTokens: 8192 });
-            finalCode = sanitize(redoCode, mode, synthesis.title, synthesis.content_brief);
-          }
-        } catch {
-          console.log(`  Review failed, keeping current`);
+        // Validate we got real content
+        const totalText = pageContent.sections.map((s) => s.body).join(" ");
+        if (totalText.length < 200) {
+          throw new Error("Content too short");
         }
-      } catch {
-        finalCode = sanitize("", mode, synthesis.title, synthesis.content_brief);
+
+        console.log(`  Title: ${pageContent.title}`);
+        console.log(`  Subtitle: ${pageContent.subtitle}`);
+        console.log(`  Mood: ${pageContent.mood}`);
+        console.log(`  Sections: ${pageContent.sections.length}`);
+        console.log(`  Content length: ${totalText.length} chars`);
+
+        // Save synthesis metadata for memory update
+        found_interesting = parsed.found_interesting || [];
+        wants_to_explore = parsed.wants_to_explore || [];
+        commit_message = parsed.commit_message || `${mode}: cycle ${cycle}`;
+      } catch (e) {
+        console.error(`  Synthesis failed:`, e);
+        // Use accumulated content directly as a fallback
+        pageContent = {
+          title: "Fragments from the Living Internet",
+          subtitle: `${accumulated.length} pieces gathered, ${new Date().toLocaleDateString()}`,
+          mood: "gathering in the dark",
+          sections: accumulated.slice(0, 6).map((s) => ({
+            heading: s.title,
+            body: s.content.slice(0, 500),
+            style: "normal" as const,
+          })),
+          fragments: accumulated.slice(6, 12).map((s) => s.title),
+          cycle,
+          timestamp: new Date().toISOString(),
+          sources_touched: accumulated.map((s) => s.source),
+        };
+        found_interesting = ["the raw material itself"];
+        wants_to_explore = ["whatever comes next"];
+        commit_message = `${mode}: raw fragments, cycle ${cycle}`;
+        console.log(`  Using fallback: raw fragments`);
       }
 
-      // ── PHASE 5: WRITE + VALIDATE + COMMIT ────────────────────────
+      // ── PHASE 3: RENDER ──────────────────────────────────────────
 
-      const cycle = memory.total_cycles + 1;
-      const pageDir = join(ROOT, `src/app/${mode}`);
-      const pagePath = join(pageDir, "page.tsx");
+      const tsx = mode === "guided"
+        ? renderGuided(pageContent)
+        : renderFreeform(pageContent);
 
-      // Back up current page
-      const backup = existsSync(pagePath) ? readFileSync(pagePath, "utf-8") : null;
+      const pagePath = join(ROOT, `src/app/${mode}/page.tsx`);
+      writeFileSync(pagePath, tsx);
+      console.log(`  Rendered ${mode} page (${tsx.length} bytes)`);
 
-      writeFileSync(pagePath, finalCode);
+      // ── PHASE 4: BUILD CHECK ─────────────────────────────────────
 
-      // Quick build check — make sure Next.js can compile it
       console.log(`  Build checking...`);
       try {
-        execSync("npx next build 2>&1", { cwd: ROOT, timeout: 60_000 });
+        execSync("npx next build 2>&1", { cwd: ROOT, timeout: 90_000, stdio: "pipe" });
         console.log(`  ✓ Build passed`);
-      } catch (buildErr) {
-        console.log(`  ✗ Build failed — reverting to backup`);
-        if (backup) {
-          writeFileSync(pagePath, backup);
-        }
-        accumulated = [];
-        roundsWithoutCommit = 0;
+      } catch (err) {
+        console.log(`  ✗ Build failed — investigating...`);
+        // Try to get the error
+        const errMsg = err instanceof Error ? (err as any).stderr?.toString() || (err as any).stdout?.toString() || err.message : String(err);
+        console.log(`    ${errMsg.slice(0, 200)}`);
+        // Since templates should never fail, log and continue
+        // but don't commit
         await sleep(10_000);
         continue;
       }
 
+      // ── PHASE 5: COMMIT ──────────────────────────────────────────
+
       // Update memory
       const updatedMemory = addEntry(memory, {
         timestamp: new Date().toISOString(),
-        explored: accumulated.map((s) => s.title).slice(-15),
-        found_interesting: synthesis.found_interesting || [],
-        wants_to_explore: synthesis.wants_to_explore || [],
-        mood: synthesis.mood,
-        reflection: synthesis.reflection,
+        explored: accumulated.map((s) => s.title).slice(0, 15),
+        found_interesting,
+        wants_to_explore,
+        mood: pageContent.mood,
+        reflection: pageContent.sections[0]?.body.slice(0, 300) || "",
       });
       saveMemory(updatedMemory, mode);
 
@@ -378,44 +287,41 @@ Write the COMPLETE page now. Remember:
       addDriftEntry(driftLog, {
         cycle,
         timestamp: new Date().toISOString(),
-        commit_message: synthesis.commit_message,
-        reasoning: synthesis.reflection,
-        topics_consumed: accumulated.map((s) => s.title).slice(-10),
-        what_it_created: synthesis.title,
-        emotional_state: synthesis.mood,
-        design_choices: mode === "guided" ? "roundletter discipline" : "pure freedom",
+        commit_message,
+        reasoning: pageContent.sections[0]?.body.slice(0, 300) || "",
+        topics_consumed: accumulated.map((s) => s.title).slice(0, 10),
+        what_it_created: pageContent.title,
+        emotional_state: pageContent.mood,
+        design_choices: mode === "guided" ? "roundletter editorial" : "dark freeform",
         guided_vs_freeform_note: "",
       });
       saveDrift(driftLog, mode);
 
-      // Commit and push
-      console.log(`  Committing...`);
+      // Git commit + push
       try {
         execSync("git add -A", { cwd: ROOT });
-        const commitMsg = synthesis.commit_message.startsWith(mode)
-          ? synthesis.commit_message
-          : `${mode}: ${synthesis.commit_message}`;
-        const msg = `${commitMsg}\n\ncycle: ${cycle} · mode: ${mode}\ntheme: ${synthesis.theme}\nmood: ${synthesis.mood}\n\n${synthesis.reflection.slice(0, 300)}`;
+        const fullMsg = commit_message.startsWith(mode) ? commit_message : `${mode}: ${commit_message}`;
+        const msg = `${fullMsg}\n\ncycle: ${cycle} · mode: ${mode}\ntitle: ${pageContent.title}\nmood: ${pageContent.mood}\nsources: ${accumulated.length} pieces from ${[...new Set(accumulated.map((s) => s.source))].join(", ")}`;
         execSync(`git commit -m ${JSON.stringify(msg)}`, { cwd: ROOT });
         execSync("git push", { cwd: ROOT, stdio: "pipe" });
-        console.log(`  ✓ Committed: "${synthesis.title}" (${mode} #${cycle})`);
+        console.log(`  ✓ Committed and pushed`);
       } catch {
         console.error(`  Commit/push failed`);
       }
 
-      console.log(`\n  ★ ${mode.toUpperCase()} #${cycle}: "${synthesis.title}"`);
-      console.log(`    ${synthesis.mood}\n`);
+      console.log(`\n  ★ ${mode.toUpperCase()} #${cycle}: "${pageContent.title}"`);
+      console.log(`    ${pageContent.mood}`);
+      console.log(`    ${pageContent.sections.length} sections, ${pageContent.fragments?.length || 0} fragments\n`);
 
-      // Reset and rest
+      // Rest
       accumulated = [];
-      roundsWithoutCommit = 0;
-      const pause = 45_000 + Math.random() * 75_000;
-      console.log(`  Resting ${Math.round(pause / 1000)}s...\n`);
+      const pause = 30_000 + Math.random() * 60_000;
+      console.log(`  Next cycle in ${Math.round(pause / 1000)}s...\n`);
       await sleep(pause);
 
     } catch (e) {
       console.error("Loop error:", e);
-      await sleep(30_000);
+      await sleep(15_000);
     }
   }
 }
