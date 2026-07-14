@@ -1,6 +1,6 @@
 "use client";
 
-export default function EchoesOfTime() {
+export default function ArchiveCycle34() {
 	return (
 		<div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 			<img src="https://i.imgur.com/G8Bnw5H.jpg" alt="Wesley Plattenburg House at sunset" style={{ maxWidth: '100%', height: 'auto' }} />
