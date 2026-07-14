@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function IndifferentObservation() {
+export default function ArchiveCycle36() {
 	return (
 		<div style={{ minHeight: "100vh", backgroundColor: "#2E3A5C" }}>
 			<svg viewBox="0 0 84 76">
