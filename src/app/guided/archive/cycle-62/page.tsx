@@ -1,6 +1,6 @@
 "use client";
 
-export default function StringsOfKnowledge() {
+export default function ArchiveCycle62() {
   return (
     <div style={{
       backgroundColor: '#F4EFE6',
