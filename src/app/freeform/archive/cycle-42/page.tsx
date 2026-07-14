@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function ShadowsOfProgression() {
+export default function ArchiveCycle42() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <header style={{ backgroundColor: '#333', color: '#fff', padding: '2rem' }}>
