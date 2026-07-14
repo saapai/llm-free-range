@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function TheInfiniteCanvas() {
+export default function ArchiveCycle62() {
   return (
     <div style={{
       display: "flex",
