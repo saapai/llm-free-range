@@ -1,6 +1,6 @@
 "use client";
 
-export default function IndifferentCosmos() {
+export default function ArchiveCycle41() {
   return (
     <div style={{
       minHeight: '100vh',
