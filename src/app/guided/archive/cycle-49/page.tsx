@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function TheEndlessEcho() {
+export default function ArchiveCycle49() {
     return (
         <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "#F4EFE6", color: "#1C1A17" }}>
             <header style={{ padding: "2rem 3.5rem", borderBottom: `solid ${(0.08).toFixed(1)}rem #8B3A2E`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
