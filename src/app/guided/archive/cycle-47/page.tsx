@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function ArtPiece() {
+export default function ArchiveCycle47() {
   return (
     <div style={{
       minHeight: "100vh",
