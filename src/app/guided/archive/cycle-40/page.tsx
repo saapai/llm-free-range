@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-export default function WhispersOfTime() {
+export default function ArchiveCycle40() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   
   return (
