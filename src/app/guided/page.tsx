@@ -1,6 +1,6 @@
 "use client";
 
-export default function EchoesOfTheUnspoken() {
+export default function ShipOfTheseus() {
   return (
     <div
       style={{
@@ -8,124 +8,118 @@ export default function EchoesOfTheUnspoken() {
         backgroundColor: "#F4EFE6",
         color: "#1C1A17",
         fontFamily: "Georgia, serif",
+        padding: "4rem 2.5rem",
         maxWidth: "44rem",
         margin: "0 auto",
-        padding: "3rem 2rem",
-        boxSizing: "border-box",
       }}
     >
       <h1
         style={{
           fontSize: "clamp(2.1rem, 1.3rem + 4.2vw, 3.9rem)",
+          lineHeight: "1.1",
           fontWeight: 400,
           fontStyle: "italic",
-          borderBottom: "1px solid rgba(28,26,23,0.22)",
-          paddingBottom: "1rem",
-          marginBottom: "2.5rem",
+          color: "#8B3A2E",
+          marginBottom: "3rem",
         }}
       >
-        Echoes of the Unspoken: A Mosaic of Absences
+        The Ship of Theseus Carves Canyons in the Moonlight
       </h1>
 
       <p
         style={{
-          lineHeight: 1.92,
-          fontSize: "1.1rem",
+          fontSize: "1rem",
+          lineHeight: "1.92",
           marginBottom: "2.5rem",
         }}
       >
-        They say the first sound after a death is the furniture settling. I heard
-        something else that night—the creak of my childhood treehouse, now
-        swallowed by cedar, whispering a lullaby I never learned. The wind
-        carries names like smoke: Uncle Jethro’s laugh, the scent of your perfume
-        at the theater, the unfinished symphony that hovered between us like a
-        wasp in winter. All of it dissolves in the grammar of absence.
+        A pale blue vessel dissolves in the upper right quadrant of your mind, its
+        hull etched with the numeral 4947. It is not a ship but a wound, a
+        silhouette of what was once carried across uncharted tides. Below it, a
+        fragmented moai watches—its left eye a chasm, its right a smudge of
+        forgotten pigment. Between them floats a 404 error, translucent, its
+        digits warping like smoke over a campfire. You have arrived here before,
+        but never with both hands intact.
+      </p>
+
+      <hr
+        style={{
+          border: "1px solid rgba(28,26,23,0.22)",
+          margin: "2.5rem 0",
+        }}
+      />
+
+      <blockquote
+        style={{
+          borderLeft: "3px solid #8B3A2E",
+          paddingLeft: "1.2rem",
+          fontStyle: "italic",
+          fontSize: "0.95rem",
+          lineHeight: "1.92",
+          marginBottom: "2rem",
+        }}
+      >
+        What we see is not the shape of things, but the ache between them. —P.B.
+        Shelley, in the margins of a 1795 travel journal
+      </blockquote>
+
+      <p
+        style={{
+          fontSize: "1rem",
+          lineHeight: "1.92",
+          marginBottom: "2.5rem",
+        }}
+      >
+        You are the sum of your substitutions. A heart once thrummed with the
+        same rhythm as a distant star; now it beats to the hum of a refrigerator.
+        The moai’s neck is broken, yet it remembers the weight of its own
+        silence. We build monuments to what we cannot keep—numbers carved into
+        stone, URLs that outlive the doors they pointed to. The Ship of Theseus
+        did not lose its identity when its planks were replaced. It became a
+        question, a riddle without a key.
       </p>
 
       <blockquote
         style={{
           borderLeft: "3px solid #8B3A2E",
-          paddingLeft: "1rem",
+          paddingLeft: "1.2rem",
           fontStyle: "italic",
+          fontSize: "0.95rem",
+          lineHeight: "1.92",
           marginBottom: "2.5rem",
-          fontSize: "1rem",
-          color: "#6B6560",
         }}
       >
-        The Mighty Pan is dead. How much died with him! How many mornings
-        unbroken, how many unlettered sonnets still cradled in the fist of the
-        unsung.
+        To lose a thing is to become its echo. —Abbaye de Saint-Non, 1762
       </blockquote>
 
-      <div
-        style={{
-          backgroundColor: "#8B3A2E",
-          color: "#EDE5D5",
-          padding: "0.3rem 0.6rem",
-          display: "inline-block",
-          marginBottom: "1.2rem",
-        }}
-      >
-        “condemned to be free”
-      </div>
-
       <p
         style={{
-          lineHeight: 1.92,
-          fontSize: "1.1rem",
-          marginBottom: "2.5rem",
-        }}
-      >
-        In the attic of my grandmother’s house, dust motes dance over sealed
-        jars—each one a vowel of her unsent letters. I imagine her pressing
-        "dear" against the glass, her pen hovering like a moth over closed
-        petals. We are all curators of the unspoken: the vows we never took, the
-        words that curdled in our throats, the love letters we wrote in code to
-        ourselves. The void hums with the weight of our reticence.
-      </p>
-
-      <div
-        style={{
-          border: "1px solid rgba(28,26,23,0.22)",
-          padding: "1.5rem",
-          marginBottom: "2.5rem",
-        }}
-      >
-        <p
-          style={{
-            fontSize: "0.9rem",
-            lineHeight: 1.6,
-            color: "#3E4852",
-            margin: 0,
-          }}
-        >
-          Ash is not silence. It is the afterlife of fire, a thousand tiny
-          exhalations. Watch it swirl in the hollow where the hearth once roared:
-          <br />
-          <br />
-          <em>
-            "You were a constellation of maybes" — now reduced to a single
-            smudge on the mantel. The clock ticks backward in its own language.
-            We are all made of what didn’t happen."
-          </em>
-        </p>
-      </div>
-
-      <p
-        style={{
-          lineHeight: 1.92,
-          fontSize: "1.1rem",
+          fontSize: "1rem",
+          lineHeight: "1.92",
           marginBottom: "3rem",
         }}
       >
-        The Red Wolf’s shadow stretches across the page—a charcoal sketch
-        smudged by time. Its eyes are the shape of questions asked too late. In
-        the margin, faceless figures march toward the edge of the known world,
-        their boots dissolving into the same ink that writes our names. What
-        saves us is not the answer, but the breath we hold between
-        <em>almost</em> and <em>never</em>, that fragile space where longing
-        becomes a kind of prayer.
+        The 404 error is not a failure. It is a map of all that has been
+        unmoored. You stand in the ruins of a language where every word is a
+        missing person. The Ship carves canyons in the moonlight, but the
+        canyons—ah, the canyons—are what remain. They hold the shape of your
+        passing, the dust of your substitutions, the quiet erosion of what you
+        called home. Look closely: the moai’s mouth is not a mouth at all, but a
+        crack where the light leaks out.
       </p>
+
+      <div
+        style={{
+          marginTop: "4rem",
+          textAlign: "center",
+          fontSize: "0.75rem",
+          color: "#6B6560",
+          textTransform: "uppercase",
+          letterSpacing: "0.1em",
+        }}
+      >
+        · 4947 ·
+      </div>
     </div>
   );
 }
