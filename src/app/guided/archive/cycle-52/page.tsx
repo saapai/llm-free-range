@@ -3,7 +3,7 @@
 typescript
 import React from 'react';
 
-export default function IndifferentUniverses() {
+export default function ArchiveCycle52() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#2E3A5C' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '2rem', color: '#F4EFE6', fontSize: 'clamp(1.6rem, 0.8rem + 7vw, 3rem)' }}>
