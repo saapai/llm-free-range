@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function TheTrailOfIntrigue() {
+export default function ArchiveCycle38() {
   const [showText, setShowText] = useState(false);
 
   return (
