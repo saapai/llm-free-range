@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-export default function BreakingFree() {
+export default function ArchiveCycle49() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f8d6a7' }}>
       <div
