@@ -1,6 +1,6 @@
 "use client";
 
-export default function IndifferentEternity() {
+export default function ArchiveCycle59() {
   return (
     <div
       style={{
