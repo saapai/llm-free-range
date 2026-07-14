@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-export default function DragonFlight() {
+export default function ArchiveCycle48() {
 	const [progress, setProgress] = useState(0);
   
 	useEffect(() => {
