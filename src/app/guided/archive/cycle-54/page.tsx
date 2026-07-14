@@ -3,7 +3,7 @@
 typescript
 import { useState } from 'react';
 
-export default function InfiniteCanvas() {
+export default function ArchiveCycle54() {
   const [isAnimated, setIsAnimated] = useState(false);
 
   return (
