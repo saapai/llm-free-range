@@ -1,6 +1,6 @@
 "use client";
 
-export default function ArtOfCircularFinancing() {
+export default function ArchiveCycle44() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F4EFE6' }}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
