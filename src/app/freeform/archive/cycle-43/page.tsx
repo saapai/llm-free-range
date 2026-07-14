@@ -1,6 +1,6 @@
 "use client";
 
-export default function SymphonyOfCode() {
+export default function ArchiveCycle43() {
     return (
         <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{  backgroundImage: `url("https://upload.wikimedia.org/wikipedia/commons/7/73/RISCBoy_prototype.jpg")`, backgroundSize: "cover", width:"50%", height:'100vh', paddingRight: '2em' }}>
