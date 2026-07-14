@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function StargazingOdyssey() {
+export default function ArchiveCycle39() {
  return (
    <div style={{ minHeight: "100vh", backgroundColor: "#03052a", color: "#ffffff", padding: "4rem" }}>
      <h1 style={{ fontSize: "6rem", marginBottom: "2rem", textShadow: "-1px 1px #17ebe9, -2px 2px #db308b", letterSpacing: ".25em" }}>Stargazing Odyssey</h1>
