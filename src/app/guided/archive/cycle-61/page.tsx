@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import * as THREE from 'three';
 import NebulaTexture from './nebula.jpg';
 
-export default function IndifferentUniverse() {
+export default function ArchiveCycle61() {
     useEffect(() => {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
