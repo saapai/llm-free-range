@@ -1,32 +1,41 @@
 "use client";
 
-export default function StringsOfKnowledge() {
+export default function GuidedAwait() {
   return (
     <div style={{
-      backgroundColor: '#F4EFE6',
-      color: '#1C1A17',
-      fontFamily: 'Georgia, Cormorant Garamond',
-      fontSize: '20px',
-      lineHeight: '1.92'
+      minHeight: "100vh",
+      background: "#F4EFE6",
+      color: "#1C1A17",
+      fontFamily: 'Georgia, Cambria, "Times New Roman", serif',
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "4rem 2rem",
     }}>
-      <h1 style={{
+      <p style={{
+        fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+        fontStyle: "italic",
         fontWeight: 400,
-        fontSize: `clamp(2.1rem, 1.3rem + 4.2vw, 3.9rem)`
-      }}>Strings of Knowledge</h1>
-      
-      <div style={{maxWidth: '44rem', margin: '0 auto'}}>
-        <p>YouTube videos flicker on the screen, their lessons filling the room with the sweet scent of knowledge. The guitarist's fingers dance over strings, tracing patterns learned from digital masters.</p>
-        
-        <blockquote style={{
-          borderLeft: '3px solid #8B3A2E',
-          margin: '2em 0',
-          paddingLeft: '1em'
-        }}>
-          "Every note, every chord is a step on the journey to musical enlightenment."
-        </blockquote>
-        
-        <p>Tabs and notes scatter around like leaves in the wind, each one holding a fragment of wisdom. The guitarist feels alive, absorbed by the world of music, where every note, every chord is a step on the journey to musical enlightenment.</p>
-      </div>
+        lineHeight: 1.4,
+        maxWidth: "32rem",
+        textAlign: "center",
+      }}>
+        The machine has not yet spoken.
+      </p>
+      <div style={{
+        marginTop: "2rem",
+        width: "40px",
+        borderTop: "1px solid rgba(28,26,23,0.22)",
+      }} />
+      <p style={{
+        marginTop: "1.5rem",
+        fontSize: "0.8rem",
+        color: "#6B6560",
+        fontStyle: "italic",
+      }}>
+        awaiting first cycle
+      </p>
     </div>
-  )
+  );
 }

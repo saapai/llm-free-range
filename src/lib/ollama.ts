@@ -1,10 +1,10 @@
 /**
  * Ollama client — talks to the local LLM.
- * Uses dolphin-mixtral:8x22b by default (uncensored, large context).
+ * Default model can be overridden per-call or via env var.
  */
 
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434";
-const MODEL = process.env.OLLAMA_MODEL || "dolphin-mixtral:8x22b";
+const MODEL = process.env.OLLAMA_MODEL || "qwen3:32b";
 
 export interface OllamaResponse {
   model: string;
