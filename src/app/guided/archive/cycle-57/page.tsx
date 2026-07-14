@@ -1,6 +1,6 @@
 "use client";
 
-export default function Piece() {
+export default function ArchiveCycle57() {
   return (
     <div style={{ minHeight: "100vh", background: "#F4EFE6", color: "#1C1A17", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Georgia, serif", padding: "4rem" }}>
       <div style={{ maxWidth: "44rem", textAlign: "center" }}>
