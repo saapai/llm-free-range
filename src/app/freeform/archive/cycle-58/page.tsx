@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function CosmicChaos() {
+export default function ArchiveCycle58() {
   return (
     <div style={{
       display: 'flex',
