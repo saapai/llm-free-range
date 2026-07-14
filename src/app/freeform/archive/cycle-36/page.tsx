@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function TheEndlessFrontier() {
+export default function ArchiveCycle36() {
   return (
     <div style={{
       minHeight: '100vh',
