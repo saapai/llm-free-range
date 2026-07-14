@@ -1,6 +1,6 @@
 "use client";
 
-export default function ResilienceReborn() {
+export default function ArchiveCycle59() {
   return (
     <div style={{
       backgroundColor: '#1C1A17',
