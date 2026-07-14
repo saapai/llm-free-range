@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function WhispersInTheWind() {
+export default function ArchiveCycle51() {
  return (
  <div style={{minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
    <div style={{backgroundImage: 'url(path/to/ethereal-dreamscape.jpg)', backgroundSize: 'cover', padding: 48, borderRadius: 16, boxShadow: '0px 0px 24px rgba(0, 0, 0, 0.3)'}}>
