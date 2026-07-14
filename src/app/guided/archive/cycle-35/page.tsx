@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function Artwork() {
+export default function ArchiveCycle35() {
     return (
         <div style={{minHeight: '100vh', backgroundColor: '#F4EFE6', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <div style={{width: '44rem', textAlign: 'justify', padding: '2rem 3rem', boxSizing: 'border-box', backgroundColor: '#EDE5D5', borderRadius: '10px', position: 'relative', overflow: 'hidden'}}>
