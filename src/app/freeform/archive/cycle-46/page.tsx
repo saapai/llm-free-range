@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function WhispersOfBaikal() {
+export default function ArchiveCycle46() {
   return (
     <div style={{
       minHeight: "100vh",
