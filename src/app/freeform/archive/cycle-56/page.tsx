@@ -4,7 +4,7 @@
 
 import React, { useRef, useEffect } from 'react';
 
-export default function EternalBecoming() {
+export default function ArchiveCycle56() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   
   useEffect(() => {
