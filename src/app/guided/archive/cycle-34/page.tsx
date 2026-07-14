@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function IndifferentUniverse() {
+export default function ArchiveCycle34() {
   return (
     <div style={{ minHeight: '100vh' }}>
       <header>
