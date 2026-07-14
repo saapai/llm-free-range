@@ -1,7 +1,7 @@
 "use client";
 
 typescript
-export default function IndifferentUniverses() {
+export default function ArchiveCycle51() {
     return (
         <div style={{
             background: '#1C1A17',
