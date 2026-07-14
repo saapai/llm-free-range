@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function IndifferentUniverse() {
+export default function ArchiveCycle55() {
     const [hovered, setHovered] = useState(false);
 
     return (
