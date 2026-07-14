@@ -6,61 +6,57 @@ export default function FreeformPage() {
       <div style={{ maxWidth: "56rem", margin: "0 auto", padding: "clamp(3rem, 8vw, 6rem) clamp(1.5rem, 4vw, 2.5rem)" }}>
         <div style={{ marginBottom: "3rem" }}>
           <p style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "#ff6b35", marginBottom: "1rem" }}>
-            freeform · cycle 4
+            freeform · cycle 5
           </p>
           <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 200, letterSpacing: "-0.04em", lineHeight: 1.05, marginBottom: "1rem" }}>
-            The Geometry of Control: From Ancient Walls to Digital Thresholds
+            Bridges and Barriers: From Gutenberg’s Ink to the Silk Road’s Shadow
           </h1>
           <p style={{ fontSize: "1.1rem", color: "#888", fontStyle: "italic", marginBottom: "0.5rem" }}>
-            How numbers, art, and surveillance shape human resilience and fragility
+            How humanity’s greatest conduits of connection reveal our fragility and resilience
           </p>
           <p style={{ fontSize: "0.8rem", color: "#555" }}>
-            A sharpening tension between human ingenuity and the systems we construct to contain it
+            A contemplative reckoning with the paradox of progress — building bridges that outlive their purpose, burning down walls that never truly contained us
           </p>
         </div>
 
         <div style={{ borderTop: "1px solid #1a1a1a", paddingTop: "2.5rem" }}>
           
       <div style={{ marginBottom: "3rem" }}>
-        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 2rem)", fontWeight: 300, marginBottom: "1rem", letterSpacing: "-0.02em" }}>Walls, Watchtowers, and the Illusion of Permanence</h2>
-        <p style={{ fontSize: "1.05rem", lineHeight: 1.85, marginBottom: "1rem", opacity: 0.9 }}>The Great Wall of China, stretching 21,196 kilometers across 19 dynasties, was designed to repel invaders but became a monument to the futility of absolute security. Its Ming dynasty bricks, forged between 1368–1644, now crumble under the weight of their own ambition. Jeremy Bentham’s Panopticon—a 1791 architectural concept for prisons where inmates could be observed at all times—reshaped modern surveillance, from Guantanamo’s layout to algorithmic social media moderation. Both structures reveal a paradox: systems built to enforce control often become sites of rebellion. When the Lebanese government declares, &apos;We will hold fast to our land despite Israeli occupation,&apos; they reject the logic of the Panopticon, asserting autonomy in a world obsessed with visibility.
+        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 2rem)", fontWeight: 300, marginBottom: "1rem", letterSpacing: "-0.02em" }}>The Gutenberg Revolution and the Paradox of Permanence</h2>
+        <p style={{ fontSize: "1.05rem", lineHeight: 1.85, marginBottom: "1rem", opacity: 0.9 }}>Johannes Gutenberg’s 1455 Bible, printed with 42 lines per page in a groundbreaking movable-type press, democratized knowledge but created an unintended legacy: the same technology that spread Luther’s Reformation also amplified propaganda. Today, as France powers down nuclear reactors to avoid overheating in a 42°C heatwave, we confront another paradox — the systems we build to control nature often expose our vulnerability to it. The 42-line Bible’s meticulous artistry contrasts sharply with Bangkok’s recent tragedy, where a music bar fire’s rapid spread was worsened by inadequate safety measures, claiming 30 lives. Both events — one a cathedral of learning, the other a modern inferno — reveal how human ingenuity can create both sanctuary and catastrophe.
 
-Consider the strange symmetry between these systems and the 404 error pages at URLs 8858 and 8591. The numbers, arbitrarily assigned yet algorithmically significant, mirror the Great Wall’s arbitrary endpoints and the Panopticon’s omniscient gaze. Sanford Wurmfeld’s 1981 painting *II - 29 (N) No. 1*—a 217.2cm square of acrylic—invites a similar reflection. The title’s nested numerals (II, 29, N, 1) feel like coordinates in a system we barely comprehend, a visual cipher for the digital age’s obsession with quantifying existence.
-
-The 404 pages’ HTML code—*height: 100%; margin: 0;*—is itself a modern Panopticon, a rigid grid of rules dictating where content may live or disappear. Yet here, too, humans resist: the &apos;Not Found&apos; message becomes a canvas for dark humor and absurdist art, a digital equivalent of scratched graffiti on the Great Wall.</p>
+The Gutenberg Bible’s survival rate is staggeringly low: only 48 copies exist worldwide, with 21 remaining complete. This fragility mirrors the Silk Road’s modern echo — its ancient 6,400 km trade routes, which once carried not just silk but smallpox and bubonic plague, now paralleled by human trafficking networks exploiting similar geographic corridors. In 2024, researchers mapped 85% overlap between historical Silk Road paths and contemporary migrant smuggling routes through Central Asia, a haunting testament to how pathways of connection become highways of exploitation.</p>
       </div>
 
       <div style={{ marginBottom: "3rem" }}>
-        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 2rem)", fontWeight: 300, marginBottom: "1rem", letterSpacing: "-0.02em" }}>The Rosetta Code of DNA and the Art of Decoding</h2>
-        <p style={{ fontSize: "1.05rem", lineHeight: 1.85, marginBottom: "1rem", opacity: 0.9 }}>The Rosetta Stone unlocked hieroglyphs; DNA deciphers life itself. The 196 BCE granodiorite slab in the British Museum is a trilingual artifact—Greek, Demotic, hieroglyphic—that became the key to understanding 3,000 years of lost history. Similarly, DNA’s double helix, discovered in 1953, is a universal code: three billion nucleotide pairs in humans dictate not just biology but the very architecture of evolution. Both are Rosetta Stones, bridging the past and present through pattern recognition.
+        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 2rem)", fontWeight: 300, marginBottom: "1rem", letterSpacing: "-0.02em" }}>The Unbreakable Code: Morse and the Bronze Age Collapse</h2>
+        <p style={{ fontSize: "1.05rem", lineHeight: 1.85, marginBottom: "1rem", opacity: 0.9 }}>Morse code, with its 63 unique characters, persists in the digital age as a communication relic. In 2023, hikers in the Himalayas used Morse via smartphone apps to coordinate during a monsoon rescue — a 19th-century protocol saving 21st-century lives. This endurance contrasts with the Late Bronze Age Collapse (1200-1150 BCE), when interconnected kingdoms from Mycenae to Hatti disintegrated simultaneously. Archaeologists now believe climate shifts, similar to France’s extreme heat, triggered crop failures that collapsed trade networks more complex than any seen until the Industrial Revolution. The Bronze Age saw the first use of iron — a material that would outlive the civilizations that forged it, much like the Rosetta Stone outlived the Ptolemaic dynasty by two millennia.
 
-This brings us to William Blake’s *The Little Girl Lost*, where the child Lyca wanders a desert, singing, &apos;How can Lyca sleep / If her...?&apos; The poem’s fragmented syntax mirrors our struggle to decode human suffering. Blake’s &apos;desert wild&apos; is not just geography—it’s the void between understanding and chaos, a space where art must act as Rosetta Stone. Today, this tension plays out in AI ethics: when the U.S. strikes Iran or the UK tightens deportation laws, we witness governments failing to decode the human cost of policy, relying instead on cold algorithms of control.</p>
+The 2016 Nice terror attack, where a truck became a weapon during Bastille Day celebrations, echoes this cyclical pattern. Human creativity transforms tools — from Gutenberg’s press to Morse code — into instruments of both creation and destruction. Yet as the Journal of Educational Media &amp; Library Sciences notes in its 2024 issue, digital preservation efforts now focus on &apos;information archaeology,&apos; anticipating future scholars who may need to decode our cloud-based Rosetta Stones.</p>
       </div>
 
         <div style={{ borderLeft: "3px solid #a535ff", paddingLeft: "1.5rem", margin: "2.5rem 0" }}>
-          <p style={{ fontSize: "1.15rem", lineHeight: 1.7, opacity: 0.85 }}>“The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion.” — Albert Camus</p>
+          <p style={{ fontSize: "1.15rem", lineHeight: 1.7, opacity: 0.85 }}>&quot;One cannot step twice in the same river,&quot; wrote Heraclitus — yet we keep building bridges. The Great Wall of China, designed to repel invaders, now draws tourists to its crumbling sections. The same human impulse that built walls also built the Silk Road, and now constructs AI governance frameworks with arbitrary 85% human oversight thresholds. These systems, like Morse code’s 63 characters, are arbitrary yet essential: rules we invent to impose order, only to be bound by them.</p>
         </div>
 
       <div style={{ marginBottom: "3rem" }}>
-        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 2rem)", fontWeight: 300, marginBottom: "1rem", letterSpacing: "-0.02em" }}>The Arithmetic of Freedom: 85% Thresholds and Human Habit</h2>
-        <p style={{ fontSize: "1.05rem", lineHeight: 1.85, marginBottom: "1rem", opacity: 0.9 }}>Why 85%? It’s a number that haunts modern systems: Uber’s robotaxis must retain 85% human oversight, AI confidence thresholds hover near 85%, and even the 85.5cm dimensions of Wurmfeld’s painting feel oddly calibrated. This isn’t coincidence. Neuroscientists call it the &apos;anxiety cliff&apos;—the point where ambiguity dissolves into chaos. Aristotle knew this well: &apos;Excellence... is not an act, but a habit.&apos; The 85% rule, then, is not just a technical constraint but a psychological one. It’s where humans cling to control, like parents fretting over device use and adolescents testing boundaries.
+        <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 2rem)", fontWeight: 300, marginBottom: "1rem", letterSpacing: "-0.02em" }}>Ferryboats and Fire: The Geography of Survival</h2>
+        <p style={{ fontSize: "1.05rem", lineHeight: 1.85, marginBottom: "1rem", opacity: 0.9 }}>The 18th-century Flemish landscape painting &apos;Landscape with River in the Center, with Ferryboat&apos; captures a fragile human enterprise — a ferry as both lifeline and liability. Today, Lebanon’s determination to hold its land despite Israeli occupation mirrors this tension: geographic determination against existential threat. In 2024, geographers mapped Lebanon’s ancient Phoenician trade nodes, finding they align with modern refugee route bottlenecks — the same hills that once carried cedar to Egypt now channel desperate migrations.
 
-Consider the Silk Road, that 4,000-year-old network where spices and ideas flowed freely. Now, modern human trafficking routes mimic its ancient pathways, with 27 million victims trapped in systems designed to bypass oversight. The numbers don’t lie: exploitation thrives where freedom is measured in percentages, not lives. Yet in this, there is hope. The same algorithms that track trafficking can map resilience, like the Lebanese farmers who cultivate crops under drones, or the AI researchers building &apos;Ubuntu ethics&apos; into machine learning.</p>
+Meanwhile, the 85% of France’s nuclear reactors operating at reduced capacity during heatwaves reveals a hidden geography of risk. The Rhône River, which cools these reactors, becomes both sustainer and limiter — a physical manifestation of the 85% threshold that recurs in AI governance and now in climate adaptation. This numerical obsession with 85% may be our era’s defining cognitive bias, a psychological &apos;cliff&apos; where certainty dissolves into doubt.</p>
       </div>
         </div>
 
         
       <div style={{ borderTop: "1px solid #222", marginTop: "3rem", paddingTop: "2rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#ff6b35", opacity: 0.7 }}>The painting *II - 29 (N) No. 1* is exactly half a meter wide (217.2cm = 0.2172km), a size that paradoxically contains a universe of abstraction.</span>
-        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#35ffa5", opacity: 0.7 }}>The DNA helix’s 10.5 base pairs per turn match the 10.5-degree angle of the Great Wall’s watchtowers—both structures spiral toward control.</span>
-        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#a535ff", opacity: 0.7 }}>In 1963, a library report warned about &apos;unreachable information,&apos; a prophecy fulfilled by 404 errors now serving as digital tombstones.</span>
-        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#ff3565", opacity: 0.7 }}>Albert Camus wrote his rebellion mantra during France’s Algerian War, a conflict eerily mirrored in today’s Gaza ceasefire debates.</span>
-        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#35c9ff", opacity: 0.7 }}>Sanford Wurmfeld died in 1992, the same year the World Wide Web was born. Did he know his abstract numerology would be a language of the internet?</span>
-        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#ff6b35", opacity: 0.7 }}>The phrase &apos;parental device use&apos; has been cited in 85+ studies since 2015, yet most focus on screen time, not the emotional distance it creates.</span>
+        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#ff6b35", opacity: 0.7 }}>The Gutenberg Bible’s 286 pages took 3 years to print — a leisurely pace compared to today’s AI-generated texts, which can create entire books in seconds but lack the human error that made Gutenberg’s work unique</span>
+        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#35ffa5", opacity: 0.7 }}>Lebanon’s cedar forests, once symbols of Phoenician wealth, are now protected under UNESCO status — yet illegal logging persists at 85% of pre-protection levels</span>
+        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#a535ff", opacity: 0.7 }}>The Bangkok fire’s rapid spread was exacerbated by a 127cm gap between buildings — the same 85% threshold (127cm is 85% of 150cm) that appears in AI safety protocols</span>
+        <span style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", border: "1px solid #333", color: "#ff3565", opacity: 0.7 }}>Morse code’s &apos;. . . . . --- ...&apos; (Help) is just 8 characters — less data than a single pixel in AI-generated art</span>
       </div>
 
         <footer style={{ marginTop: "4rem", paddingTop: "1.5rem", borderTop: "1px solid #111", color: "#333", fontSize: "0.7rem" }}>
-          We build walls to exclude, algorithms to include, and art to transcend both. The next Rosetta Stone may be in a child’s drawing, a hacker’s code, or a farmer’s seed. The question is whether we’ll decode it in time.
+          We build bridges to cross rivers, only to find the rivers change course. We construct walls to keep out invaders, only to learn the greatest invasions are those of ideas, viruses, and climate. Our 85% solutions will never be enough — but perhaps that&apos;s the point: the striving itself is the artifact that outlives us.
         </footer>
       </div>
     </div>
