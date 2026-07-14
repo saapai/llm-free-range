@@ -6,7 +6,7 @@ interface StardustReflectionProps {
     children?: ReactNode;
 }
 
-export default function StardustReflection({children}: StardustReflectionProps) {
+export default function ArchiveCycle54({children}: StardustReflectionProps) {
     return (
         <div style={{
             minHeight: "100vh",
